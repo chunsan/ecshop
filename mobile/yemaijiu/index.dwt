@@ -1,0 +1,86 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<div class="con">
+  <header class="ect-header"> 
+  <img style="padding-top:5px;" src="__TPL__/images/logo.png">
+    <form action="{:url('category/index')}<!-- {if $id} -->&id={$id}<!-- {/if} -->"  method="post" id="searchForm" name="searchForm">
+      <div class="search">
+        <input name="keywords" type="search" placeholder="{$lang.no_keywords}" id="keywordBox2">
+      </div>
+    </form>
+  </header>
+  <div class="clear" style="height:50px;"></div>
+  <!--banner滚动图片s-->
+  <div id="focus" class="focus ect-margin-tb">
+    <div class="hd">
+      <ul>
+      </ul>
+    </div>
+    <div class="bd">{insert name='ads' id=1 num=3}</div>
+  </div>
+  
+  <!--首页快速导航-->
+  <nav class="container-fluid">
+    <ul class="row ect-row-nav">
+      <!--{foreach from=$navigator item=nav}--> 
+      <a href="{$nav.url}">
+      <li class="col-sm-3 col-xs-3"><i class="khfw_ico"><img src="{$nav.pic}" ></i>
+        <p class="text-center">{$nav.name}</p>
+      </li>
+      </a> 
+      <!--{/foreach}-->
+    </ul>
+  </nav>
+  <div class="box type">
+    <div class="box-hd">
+      <h2>分类推荐</h2>
+    </div>
+    {if $cat_best}
+    <div class="box-bd clearfix">
+      <!--{foreach from=$cat_best item=cat_best}--> 
+          <dl class="dl-horizontal clearfix">
+            <dt><a href="{$cat_best.url}"><img src="{$cat_best.cat_image}" class="responsive" style="height:5em"></a></dt>
+            <dd>
+              <h2><a href="{$cat_best.url}" style="color:#000000">{$cat_best.cat_name}</a></h2>
+              <!-- {if $cat_best.child_id} -->
+              <p>
+              <!-- {foreach from=$cat_best.child_id item=rec_cat name=f} -->
+              {if $smarty.foreach.f.iteration < 2}
+              <a href="{$rec_cat.url}" style="color:#a2a2a2">{$rec_cat.name|escape:html}</a> | 
+              {/if}
+              <!-- {/foreach} -->
+	      <a href="{$cat_best.url}" style="color:#a2a2a2">...</a>
+              </p>
+              <!-- {/if} -->
+            </dd>
+          </dl>
+     <!--{/foreach}-->
+    </div>
+    {/if}
+  </div>
+  <div class="box" style="">
+    <div class="box-hd">
+      <h2>新品上市</h2>
+    </div>
+    <div class="box-bd">{insert name='ads' id=2 num=1} </div>
+  </div>
+
+    <div class="box" style="">
+    <div class="box-hd">
+      <h2>精品推荐</h2>
+    </div>
+    <div class="box-bd">{insert name='ads' id=3 num=1} </div>
+  </div>
+
+  <!-- #BeginLibraryItem "/library/recommend_hot.lbi" --><!-- #EndLibraryItem -->
+  <footer>
+    <nav class="ect-nav"><!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem --></nav>
+  </footer>
+    <div style="padding-bottom:4.2em;"></div>
+</div>
+<!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem --> 
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
+<script type="text/javascript">
+get_asynclist("{:url('index/ajax_goods', array('type'=>'hot'))}" , '__TPL__/images/loader.gif');
+</script>
+</body>
+</html>

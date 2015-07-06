@@ -1,0 +1,48 @@
+<!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem -->
+<div class="login_content top_menu_m50">
+  <form name="formLogin" id="login_from" action="{:url('user/login')}" method="post" class="validforms">
+    <div class="loginBox mb clearfix">
+      <ul class="tab clearfix">
+        <li class="on">会员登录</li>
+        <!--    <li class="ti">非会员登录</li> -->
+      </ul>
+      <div class="login tab-on">
+        <dl>
+          <dt>{$lang.username}:</dt>
+          <dd>
+            <input placeholder="{$lang.mobile}" name="username" id="username" datatype="*" type="text" class="input-txt w158">
+          </dd>
+        </dl>
+        <dl>
+          <dt>{$lang.label_password}:</dt>
+          <dd>
+            <input placeholder="{$lang.label_password}"  name="password" datatype="*6-16" type="password" class="input-txt w158">
+          </dd>
+        </dl>
+
+        <!-- 判断是否启用验证码{if $enabled_captcha} -->
+        <dl>
+          <dt>{$lang.comment_captcha}:</dt>
+          <dd>
+            <input name="captcha" type="text" class="input-txt w38" placeholder="{$lang.comment_captcha}">
+            <img src="{:url('Public/captcha', array('rand'=>$this->_var['rand']))}" alt="captcha" class="img-yzm" onClick="this.src='{:url('public/captcha', array('t'=>'Math.random()'))}'" /> </dd>
+        </dl>
+        <!--{/if}-->
+        
+        <dl class="mb">
+          <dd>
+            <p>
+              <a href="{:url('user/get_password_phone')}" id="forget-password" class="blue_link">{$lang.forgot_password}</a> </p><!-- {if $anonymous_buy eq 1 && $step eq 'flow'} 是否允许未登录用户购物 -->
+      <a href="{:url('flow/consignee',array('direct_shopping'=>1))}" style="float:right;">{$lang.direct_shopping}</a>
+      <!-- {/if} -->
+          </dd>
+        </dl>
+        <input type="hidden" name="back_act" value="{$back_act}" />
+        <a href="javascript:$('#login_from').submit();" id="loginButton" class="red mb login-btn">{$lang.now_landing}</a> <a href="{:url('user/register')}" class="blue_link reg-link" style="cursor: pointer;">还不是会员？立即注册加入。</a> </div>
+    </div>
+
+  </form>
+
+</div>
+<!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+</body></html>

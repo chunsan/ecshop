@@ -1,0 +1,22 @@
+<!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem -->
+<div class="ect-pro-list user-order top_menu_m50" style="border-bottom:none;">
+    {if $orders_list}
+    <ul id="J_ItemList">
+       <li class="single_item"></li>
+       <a href="javascript:;" style="text-align:center" class="get_more"></a>
+    </ul>
+           {else}
+            <p style="text-align:center">您的订单为空，请前往商城购物</p>
+            {/if}
+</div>
+</div>
+<!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+<footer class="logo"><img src="__TPL__/images/copyright.png" width="176" height="60"></footer>
+<script type="text/javascript">
+{foreach from=$lang.merge_order_js item=item key=key}
+    var {$key} = "{$item}";
+{/foreach}
+get_asynclist('index.php?m=default&c=user&a=async_order_list&pay={$pay}' , '__TPL__/images/loader.gif');
+</script> 
+</body></html>

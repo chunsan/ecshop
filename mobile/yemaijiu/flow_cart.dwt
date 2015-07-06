@@ -1,0 +1,88 @@
+<div class="con">
+  <div class="ect-bg">
+    <header class="ect-header ect-margin-tb ect-margin-lr text-center ect-bg icon-write"> <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> <span>{$title}</span> </header>
+
+  </div>
+  <div class="cart_bar top_menu_m50">
+    <label for="price">共<span class="co" id="total_number">{$total.total_number}</span>件商品，合计<span class="cr" id="goods_subtotal_top">{$total.goods_price}</span></label>
+    <a href="./index.php" class="shopping-button">继续购物</a> </div>
+  <div class="cart_content cart"> 
+    <!-- {if $goods_list } -->
+    <ul class="cart-shop clearfix">
+      <!-- {foreach from=$goods_list item=goods key=k} -->
+      <li>
+        <div class="cart-shop-right"> <a class="pro-img" href="{:url('goods/index',array('id'=>$this->_var['goods']['goods_id']))}"> <img src="{$goods.goods_thumb}"> </a>
+          <dl>
+            <dt class="title"><a href="{:url('goods/index',array('id'=>$this->_var['goods']['goods_id']))}" title="{$goods.goods_name|escape:html}">{$goods.goods_name} <!-- {if $goods.parent_id gt 0} 配件 --> 
+              <span style="color:#FF0000">（{$lang.accessories}）</span> 
+              <!-- {/if} --> 
+              <!-- {if $goods.is_gift gt 0} 赠品 --> 
+              <span style="color:#FF0000">（{$lang.largess}）</span> 
+              <!-- {/if} --> </a></dt>
+            <!-- {if $show_goods_attribute eq 1} 显示商品属性 -->
+            <dd><span>{$goods.goods_attr|nl2br}</span></dd>
+            <!-- {/if} -->
+            <dd>
+              <label>数量：</label>
+              <!-- {if $goods.goods_id gt 0 && $goods.is_gift eq 0 && $goods.parent_id eq 0} 普通商品可修改数量 -->
+
+              <span class="glyphicon glyphicon-minus" id="{$goods.rec_id}" onclick="goods_cut(this);" ></span>
+              <input type="hidden" id="back_number{$goods.rec_id}" value="{$goods.goods_number}" />
+              <input type="text" class="input-txt w38" name="{$goods.rec_id}" id="goods_number{$goods.rec_id}" autocomplete="off" value="{$goods.goods_number}" onFocus="back_goods_number({$goods.rec_id})" onblur="change_goods_number('2',{$goods.rec_id})">
+              <span class="glyphicon glyphicon-plus"  id="{$goods.rec_id}" onclick="goods_add(this);" ></span>
+
+              <!-- {else} -->
+              <input type="text" class="input-txt w38" readonly value="{$goods.goods_number}"/>
+              <!-- {/if} --> 
+             </dd>
+            <dd> <span class="minprice">单价：<span class="cr">{$goods.goods_price}</span></span>
+</dd>
+          </dl>
+          <div class="cart-buy-del"   onclick="if (confirm('{$lang.drop_goods_confirm}')) location.href='{:url('flow/drop_goods',array('id'=>$this->_var['goods']['rec_id']))}';"></div>
+        </div>
+      </li>
+      <!-- {/foreach} -->
+    </ul>
+    <!-- {/if} -->
+    <div class="cart-price clearfix">{$lang.goods_price}：<strong id="goods_subtotal">{$total.goods_price}</strong> </div>
+    <!-- {if $favourable_list} -->
+    <p class="bg-warning text-center ect-padding-tb" onClick="location.href='{:url('flow/label_favourable')}'">{$lang.show_favourable}</p>
+    <!-- {/if} --> 
+    
+    <!-- {if $favourable_list && $fittings_list} --> 
+	<a href="{:url('flow/label_favourable')}" class="white-btn mb mr">{$lang.show_favourable}</a> <a href="{:url('flow/goods_fittings')}" class="white-btn mb">{$lang.goods_fittings}</a> 
+    <!-- {else} --> 
+        <!-- {if $favourable_list} --> 
+        <a href="{:url('flow/label_favourable')}" class="white-btn mb w100">{$lang.show_favourable}</a> 
+        <!-- {elseif $fittings_list} --> 
+        <a href="{:url('flow/goods_fittings')}" class="white-btn mb w100">{$lang.goods_fittings}</a> 
+        <!-- {/if} --> 
+    <!-- {/if} --> 
+    
+    <a href="{:url('flow/checkout')}" id="toWriteOrder" class="red mb cart-btn">{$lang.check_out}</a> 
+    
+    <!-- {if $linked_goods} 关联商品-->
+    
+    <div class="c51 mb">{$lang.releate_goods}</div>
+    <!--{foreach from=$linked_goods item=releated_goods_data}-->
+    <div class="box mb cart_link">
+      <div class="cart-buy"> <a class="pro-img" href="{$releated_goods_data.url}"><img src="{$releated_goods_data.goods_thumb}"></a>
+        <dl>
+          <dt class="title"><a href="{$releated_goods_data.url}" title="{$releated_goods_data.goods_name}">{$releated_goods_data.short_name}</a></dt>
+          <!-- {if $releated_goods_data.promote_price neq 0} -->
+          <dd> <span class="minprice">{$lang.promote_price}<span class="cr">{$releated_goods_data.formated_promote_price}</span></span> </dd>
+          <!-- {else} -->
+          <dd> <span class="minprice">单价<span class="cr">{$releated_goods_data.shop_price}</span></span> </dd>
+          <!-- {/if} -->
+        </dl>
+        <div class="cart-buy-btn" onclick="addPresent('721aa337-3306-46a4-be23-0fb3913d40ab','1-normal',null,'presentNumInput721aa337-3306-46a4-be23-0fb3913d40ab');"></div>
+      </div>
+    </div>
+    <!-- {/foreach} --> 
+    <!-- {/if} --> 
+      <footer>
+    <nav class="ect-nav"><!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem --></nav>
+  </footer>
+  <div style="padding-bottom:4.2em;"></div>
+  </div>
+</div>

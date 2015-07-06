@@ -1,0 +1,11 @@
+<div class="box product" >
+  <div class="box-hd"> <a href="{:url('category/index',array('type'=>'hot'))}" style="color:#a2a2a2" class="fr c0">热销商品</a>
+    <h2>热销商品</h2>
+  </div>
+  <div class="container-fluid">
+  <div class="row" id="J_ItemList">
+    <div class="single_item col-xs-6 col-md-6 clearfix" style="padding: 3px;margin-bottom: -20px"></div>
+<div class="single_item box"></div>
+    <a href="javascript:;" style="text-align:center" class="get_more"></a> </div>
+</div>
+</div>

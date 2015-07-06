@@ -1,0 +1,244 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<div class="con goods_warp">
+  <header class="ect-header ect-margin-tb ect-margin-lr text-center icon-write ect-bg"> <a href="javascript:history.go(-1)" class="pull-left ect-icon ect-icon1 ect-icon-history"></a> <span>{$title}</span> </header>
+<div style="padding-top:2.4em;"></div>
+  <div id="focus" class="focus goods-focus ect-padding-lr ect-margin-tb">
+    <div class="bd">
+      <ul id="Gallery">
+        <li><a href="{$goods.original_img}"><img src="{$goods.original_img}" alt="{$goods.goods_name}" /></a></li>
+        <!--{if $pictures}--> 
+        <!-- {foreach from=$pictures item=picture name=no}--> 
+        <!-- {if $smarty.foreach.no.iteration > 1}  -->
+        <li><a href="{$picture.img_url}"><img src="{$picture.img_url}" alt="{$picture.img_desc}" /></a></li>
+        <!-- {/if}--> 
+        <!--{/foreach}--> 
+        <!--{/if}-->
+      </ul>
+    </div>
+    <div class="hd">
+      <ul>
+      </ul>
+    </div>
+  </div>
+  <div class="product">
+    <span><strong>{$goods.goods_style_name}</span>
+    <p class="pro-name">&nbsp;</p>
+    <p class="pro-info"></p>
+    <p class="pro-collect">
+    <span class="pull-right text-center <!--{if $sc eq 1}-->ect-colory<!--{/if}--> ect-padding-lr" onClick="collect({$goods.goods_id})" id='ECS_COLLECT'> <i class="fa <!--{if $sc eq 1}-->fa-heart<!--{else}-->fa-heart-o<!--{/if}-->"></i><br>
+      {$lang.btn_collect} </span>
+      </p>
+        <p class="pro-price0 clearfix"> 
+        <div class="row">
+        <div class="col-xs-4 col-md-4">
+		<span style="color:#BA0E2D"><strong>
+        {$goods.shop_price_formated}</strong></span>
+        </div>
+        <div class="col-xs-4 col-md-4">
+		<span style="color:#BA0E2D">已售：{$sales_count}</span>
+        </div>
+        <div class="col-xs-4 col-md-4">
+        <span style="color:gray"><strong>库存：{$goods.goods_number}</strong></span>
+        </div>
+        </div>
+	</p>
+  </div>
+  <div class="pad10_box mb54">
+    <div class="box"> <strong>商品介绍</strong></div>
+    <div class="box-content mb" id="goods_desc"> {$goods.goods_desc} </div>
+  </div>
+</div>
+<div class="footer footer-fixed"> <a href="{:url('flow/cart')}" class="btn-shopcart"> <img src="__TPL__/images/cart.png"> </a> <a href="javascript:showProduct();" class="orange add-cart">加入购物车</a> </div>
+<form action="javascript:addToCart({$goods.goods_id})" method="post" name="ECS_FORMBUY" id="ECS_FORMBUY" >
+  <div class="dialog" id="product"> <a href="javascript:void(0);" onclick="closeProduct()" style="float:right;"><img src="__TPL__/images/close.png"></a>
+    <div class="product"> <a href="#" class="pro-img"> <img src="{$goods.original_img}"> </a>
+      <p class="pro-name"> </p>
+      <p class="pro-info">{$goods.goods_style_name}</p>
+      <p class="pro-price clearfix" style="border-bottom:0px;border-top:0px;"> <span class="minprice"><strong id="ECS_GOODS_AMOUNT"></strong></span> </p>
+    </div>
+    <div class="goods-option-conr goods-option-con sum"> 
+      <!-- {foreach name=spec from=$specification item=spec key=spec_key} -->
+      <dl>
+        <dt>{$spec.name}</dt>
+        <dd>
+          <ul class="sum-year mb clearfix" id="sum-year">
+            <!-- {* 判断属性是复选还是单选 *} --> 
+            <!-- {if $spec.attr_type eq 1} --> 
+            <!-- {if $cfg.goodsattr_style eq 1} --> 
+            <!-- {foreach from=$spec.values item=value key=key} -->
+            <input type="radio" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked{/if} onclick="changePrice()" />
+            <label for="spec_value_{$value.id}">{$value.label}</label>
+            <!-- {/foreach} -->
+            <input type="hidden" name="spec_list" value="{$key}" />
+            <!-- {else} -->
+            <select name="spec_{$spec_key}" onchange="changePrice()">
+              <!-- {foreach from=$spec.values item=value key=key} -->
+              <option label="{$value.label}" value="{$value.id}">{$value.label} {if $value.price gt 0}{$lang.plus}{elseif $value.price lt 0}{$lang.minus}{/if}{if $value.price neq 0}{$value.format_price}{/if}</option>
+              <!-- {/foreach} -->
+            </select>
+            <input type="hidden" name="spec_list" value="{$key}" />
+            <!-- {/if} --> 
+            <!-- {else} --> 
+            <!-- {foreach from=$spec.values item=value key=key} -->
+            <input type="checkbox" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" onclick="changePrice()" />
+            <label for="spec_value_{$value.id}">{$value.label} [{if $value.price gt 0}{$lang.plus}{elseif $value.price lt 0}{$lang.minus}{/if} {$value.format_price|abs}]</label>
+            <!-- {/foreach} --> 
+            <!-- {/if} -->
+            
+          </ul>
+        </dd>
+      </dl>
+      <!-- {/foreach} -->
+      <dl>
+        <dt>选择数量</dt>
+        <dd class="of"> 
+          <!-- {if $goods.goods_id gt 0 && $goods.is_gift eq 0 && $goods.parent_id eq 0} 普通商品可修改数量 --> 
+          
+          <a class="left" onclick="changeGoodsNum('sub');"></a>
+          <input name="number" id="goods_number" class="input-txt" type="text" restcount="" onFocus="back_goods_number()" onblur="changeGoodsNum('chg');" value="1" size="4" maxlength="5">
+          <a class="right" onclick="changeGoodsNum('add');"></a> 
+          <!-- {else} -->
+          <input type="text" class="input-txt" readonly value="{$goods.goods_number} "/>
+          <!-- {/if} --> 
+        </dd>
+      </dl>
+      <a class="orange add-cart" href="javascript:addToCart_quick({$goods.goods_id})">{$lang.btn_add_to_cart}</a> </div>
+  </div>
+</form>
+
+<!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
+<script type="text/javascript" src="__TPL__/js/lefttime.js"></script> 
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function(){Code.photoSwipe('a', '#Gallery');}, false);
+/*倒计时*/
+var goods_id = {$goods_id};
+var goodsattr_style = 1;
+var gmt_end_time = 0;
+var day = "天";
+var hour = "小时";
+var minute = "分钟";
+var second = "秒";
+var end = "结束";
+var goodsId = {$goods_id};
+var now_time = {$now_time};
+onload = function()
+{
+  changePrice(2);
+  fixpng();
+  try {onload_leftTime();}
+  catch (e) {}
+}
+/**
+ * 商品详情图片宽度100%控制，商品评价星星点击效果
+ */
+$(function(){
+	img_width("#goods_desc","img");
+	$(".score span").click(function(){
+		var i = $(".score span").index($(this));
+		i++;
+		$(".score span").removeClass("star1");
+		$(".score span:lt("+i+")").addClass("star1");
+		$("#comment_rank"+i).prop("checked",true);
+	})
+})
+/**
+ * 显示底部加购物车块
+ */
+function showProduct(){
+	$('#product').show();
+	if($('.pop-bg').size()==0){
+		$('body').append('<div class="pop-bg"></div>');
+		$('.pop-bg').css('height',$('html').height());
+	};
+}
+/**
+ * 隐藏底部加购物车块
+ */
+function closeProduct(){
+	$('#product').hide();
+	$('.pop-bg').remove();
+}
+
+function img_width(obj,tab){
+	$(obj+" "+tab).css({width:"100%",height:"auto"})
+}
+function back_goods_number(){
+ var goods_number = document.getElementById('goods_number').value;
+  document.getElementById('back_number').value = goods_number;
+}
+/**
+ * 改变商品数量
+ */
+function changeGoodsNum(code){
+	if(code == 'add'){
+		var num = parseInt($("#goods_number").val());
+		$("#goods_number").val(num+1);
+		changePrice('2');
+	}else if(code == 'sub'){
+		var num = $("#goods_number").val();
+		if(num > 1){
+			$("#goods_number").val(num-1);
+		}
+		changePrice('2');
+	}else if(code == 'chg'){
+		var num = $("#goods_number").val();
+		if(isNaN(num)){//如果不是数字
+			$("#goods_number").val(1);
+		} else if (num < 1){
+			$("#goods_number").val(1);
+		} else { //去除小数点
+			var n = $("#goods_number").val();
+			$("#goods_number").val(Math.floor(n));
+		}
+		changePrice('2');
+	}
+}
+/**
+ * 点选可选属性或改变数量时修改商品价格的函数
+ */
+function changePrice(type)
+{
+  var qty = document.forms['ECS_FORMBUY'].elements['number'].value;
+  if(type == 1){qty--; }
+  if(type == 3){qty++; }
+  if(qty <=0 ){ qty=1; }
+  if(!/^[0-9]*$/.test(qty)){ qty = document.getElementById('back_number').value; }
+  document.getElementById('goods_number').value = qty;
+  var attr = getSelectedAttributes(document.forms['ECS_FORMBUY']);
+  $.get('{:url("goods/price")}', {'id':goodsId,'attr':attr,'number':qty}, function(data){
+    changePriceResponse(data);
+  }, 'json');
+}
+/**
+ * 接收返回的信息
+ */
+function changePriceResponse(res){
+  if (res.err_msg.length > 0){
+    alert(res.err_msg);
+  } else {
+    if (document.getElementById('ECS_GOODS_AMOUNT'))
+      document.getElementById('ECS_GOODS_AMOUNT').innerHTML = res.result;	
+	if (document.getElementById('cartInfoNumDisplay'))
+      document.getElementById('cartInfoNumDisplay').innerHTML = res.cart_number;  
+  }
+}
+
+/*判断user-tab是否距顶，距顶悬浮*/
+var nav_tabs_top = $(".user-tab .nav-tabs").offset().top;//获取nav-tabs距离顶部的位
+function func_scroll(){//定义一个事件效果置
+	var documentTop = $(document).scrollTop();//获取滚动条距离顶部距离
+	if(nav_tabs_top <= documentTop){
+		$(".user-tab").addClass("user-tab-fixed");
+		$("#is-nav-tabs").css("display","block");
+	}else{
+		$(".user-tab").removeClass("user-tab-fixed");
+		$("#is-nav-tabs").css("display","none");		
+	}
+}
+
+window.onscroll = function () {
+	 func_scroll();
+}
+</script>
+</body>
+</html>

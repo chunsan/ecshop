@@ -1,0 +1,8 @@
+<div class="box product" >
+  <div class="box-hd"> 
+    <a href="#" ><h2>新品上市</h2></a>
+  </div>
+  <div class="box-bd" id="J_ItemList">
+    <dl class="single_item dl-horizontal clearfix"></dl>
+    <a href="javascript:;" style="text-align:center" class="get_more"></a> </div>
+</div>

@@ -1,0 +1,71 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<div class="con">
+  <div class="ect-wrapper text-center">
+    <div class="bar">  <a href="javascript:show_filter()" class="screen-button">商品筛选</a> </div>
+    <!--{if $brands.1 || $price_grade.1 || $filter_attr_list}-->
+    <div id="cat_filter" class="bar-result">
+      <form class="hold-height" action="{:url('category/index')}&id={$id}" method="post">
+        <div class="content search"> 
+          
+          <!--{if $brands.1}-->
+          <ul class="search-item">
+            <li> <a href="javascript:;" class="itemTypeHead item-price">{$lang.brand}</a>
+              <div class="item-box filter_list"> 
+                <!--{foreach from=$brands item=brand}--> 
+                <a href="javascript:void(0);" data="{$brand.brand_id}" <!-- {if $brand.selected} -->class="on"<!-- {/if} -->>{$brand.brand_name}</a> 
+                <!--{/foreach}-->
+                <input type="hidden" name="brand" value="{$brand_id}" />
+              </div>
+            </li>
+          </ul>
+          
+          <!--{/if}--> 
+          
+          <!--{if $price_grade.1}-->
+          <ul class="search-item">
+            <li> <a href="javascript:;" class="itemTypeHead item-price">{$lang.price}</a>
+              <div class="item-box filter_list"> 
+                <!--{foreach from=$price_grade item=grade}--> 
+                <a href="javascript:void(0);" data="{$grade.start}|{$grade.end}" <!-- {if $grade.selected} -->class="on"<!-- {/if} --> >{$grade.price_range}</a> 
+                
+                <!--{/foreach}-->
+                <input type="hidden" name="price_min" value="{$price_min}" />
+                <input type="hidden" name="price_max" value="{$price_max}" />
+              </div>
+            </li>
+          </ul>
+          <!--{/if}--> 
+          
+          <!--{foreach from=$filter_attr_list item=filter_attr}-->
+          <ul class="search-item">
+            <li> <a href="javascript:;" class="itemTypeHead item-price">{$filter_attr.filter_attr_name|escape:html}</a>
+              <div class="item-box filter_list"> 
+                <!--{foreach from=$filter_attr.attr_list item=attr}--> 
+                <a href="javascript:void(0);" data="{$attr.attr_id}" <!-- {if $attr.selected} -->class="on"<!-- {/if} -->>{$attr.attr_value}</a> 
+                <!--{/foreach}-->
+                <input type="hidden" name="filter_attr" value="{$filter_attr}"/>
+              </div>
+            </li>
+          </ul>
+          <!--{/foreach}-->
+          
+          <div class="attrExtra">
+            <button class="attrExtra-submit red_btn" type="submit">确定</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!--{/if}--> 
+    
+    <!-- #BeginLibraryItem "/library/goods_list.lbi" --><!-- #EndLibraryItem --> </div>
+</div>
+<footer>
+    <nav class="ect-nav"><!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem --></nav>
+  </footer>
+    <div style="padding-bottom:4.2em;background-color: #e9e9e9""></div>
+<!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
+<script type="text/javascript">
+	get_asynclist('{:url('category/asynclist', array('id'=>$this->_var['id'], 'brand'=>$this->_var['brand_id'], 'price_min'=>$this->_var['price_min'], 'price_max'=>$this->_var['price_max'], 'filter_attr'=>$this->_var['filter_attr'], 'page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order'], 'keywords'=>$this->_var['keywords']))}' , '__TPL__/images/loader.gif');
+</script>
+</body>
+</html>

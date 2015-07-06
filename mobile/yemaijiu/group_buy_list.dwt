@@ -1,0 +1,23 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<div class="con">
+  <div style="height:4.2em;"></div>
+  <header>
+    <nav class="ect-nav ect-bg icon-write"> <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem --> </nav>
+  </header>
+  <div class="cat_content search">
+    <ul class="tab mb clearfix">
+      <li {if $sort =='goods_id'}class="on"{/if}> <a class="{if $sort =='goods_id' && $order == 'DESC'}desc{elseif $sort =='goods_id' && $order == 'ASC'}asc{/if}" href="{:url('groupbuy/index', array('id'=>$this->_var['id'],'page'=>$this->_var['page'],'sort'=>'goods_id','order'=>'DESC'))}">{$lang.sort_default}</a> </li>
+      <li {if $sort =='sales_count'}class="on"{/if}> <a class="{if $sort =='sales_count' && $order == 'DESC'}desc{elseif $sort =='sales_count' && $order == 'ASC'}asc{/if}" href="{:url('groupbuy/index', array('id'=>$this->_var['id'],'page'=>$this->_var['page'],'sort'=>'sales_count', 'order'=> ($this->_var['sort']=='sales_count' && $this->_var['order']=='ASC')?'DESC':'ASC'))}" >{$lang.sort_sales}</a> </li>
+      <li {if $sort =='click_num'}class="on"{/if}> <a class="{if $sort =='click_num' && $order == 'DESC'}desc{elseif $sort =='click_num' && $order == 'ASC'}asc{/if}" href="{:url('groupbuy/index', array('id'=>$this->_var['id'],'page'=>$this->_var['page'],'sort'=>'click_num', 'order'=> ($this->_var['sort']=='click_num' && $this->_var['order']=='ASC')?'DESC':'ASC'))}">{$lang.sort_popularity}</a> </li>
+      <li {if $sort == 'cur_price'}class="on"{/if}> <a href="{:url('groupbuy/index', array('id'=>$this->_var['id'],'page'=>$this->_var['page'],'sort'=>'cur_price', 'order'=> ($this->_var['sort']=='cur_price' && $this->_var['order']=='ASC')?'DESC':'ASC'))}">{$lang.sort_price}</a> </li>
+    </ul>
+    <div class="searchBox-row mb" id="J_ItemList">
+      <div class="single_item box"></div>
+      <a href="javascript:;" class="get_more"></a> </div>
+  </div>
+</div>
+<!-- #BeginLibraryItem "/library/search.lbi" --><!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
+<script type="text/javascript">
+	get_asynclist("{:url('groupbuy/asynclist', array('page'=>$this->_var['page'], 'sort'=>$this->_var['sort'], 'order'=>$this->_var['order']))}" , '__TPL__/images/loader.gif');
+</script>
+</body></html>
